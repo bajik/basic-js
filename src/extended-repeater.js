@@ -16,20 +16,23 @@ const { NotImplementedError } = require('../extensions/index.js');
  *
  */
 function repeater(str, options) {
-  let repeatTimes = 'repeatTimes' in options ? options.repeatTimes : 0;
-  let separator = 'separator' in options ? options.separator : '';
-  let addition = 'addition' in options ? options.addition : '';
-  let additionRepeatTimes = 'additionRepeatTimes' in options ? options.additionRepeatTimes : 0;
-  let additionSeparator = 'additionSeparator' in options ? options.additionSeparator : '';
+  str = new String(str);    
+  let repeatTimes = 'repeatTimes' in options ? options.repeatTimes : 1;
+  let separator = 'separator' in options ? options.separator : '+';
+  let addition = 'addition' in options ? new String(options.addition) : '';
+  let additionRepeatTimes = 'additionRepeatTimes' in options ? options.additionRepeatTimes : 1;
+  let additionSeparator = 'additionSeparator' in options ? options.additionSeparator : '|';
 
-  let addStr = additionRepeatTimes > 0 ? Array.from({ length: a }, () => b).join(additionSeparator) : '';
-
+  const addStr = str.concat(additionRepeatTimes > 0 ? Array.from({ length: additionRepeatTimes }, () => addition).join(additionSeparator) : '');
+  // console.log(addStr);
+  return repeatTimes > 0 ? Array.from({ length: repeatTimes }, () => addStr).join(separator) : '';
   // return 
 
-  console.log('repeatTimes: ', repeatTimes, 'separator: ', separator, 'addition: ', addition, 'additionRepeatTimes: ', additionRepeatTimes, 'additionSeparator: ', additionSeparator);
+  // console.log('repeatTimes: ', repeatTimes, 'separator: ', separator, 'addition: ', addition, 'additionRepeatTimes: ', additionRepeatTimes, 'additionSeparator: ', additionSeparator);
 }
 
-repeater('la', { repeatTimes: 3, separator: 's' });
+// repeater('la', { repeatTimes: 3, separator: 's' });
+console.log(repeater('REPEATABLE_STRING', { repeatTimes: 2, addition: 'ADDITION', additionRepeatTimes: 3 }));
 
 module.exports = {
   repeater
